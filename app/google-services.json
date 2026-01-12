@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1045511624978",
+    "project_id": "eduface-justfaceit",
+    "storage_bucket": "eduface-justfaceit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045511624978:android:0f02a78fc1af2d82a27bcb",
+        "android_client_info": {
+          "package_name": "id.my.eduface"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsgCl_Hnota1LI41uDqYDjUFnqa5hqZ2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

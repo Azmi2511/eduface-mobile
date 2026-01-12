@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_notification_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="#F8F9FA"
+    app:contentPadding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_unread_indicator"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_red_dot_circle" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_notification_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Isi pesan notifikasi..."
+                android:textSize="13sp"
+                android:textColor="#212121"
+                android:fontFamily="@font/poppins_medium" />
+
+            <TextView
+                android:id="@+id/tv_notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 menit yang lalu"
+                android:textSize="11sp"
+                android:textColor="#9E9E9E"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

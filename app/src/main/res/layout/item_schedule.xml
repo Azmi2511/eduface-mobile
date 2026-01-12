@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#F1F5F9"
+    app:strokeWidth="1.2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <FrameLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp">
+
+            <View
+                android:id="@+id/view_color_tag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.15"
+                android:background="@drawable/bg_pill_primary"
+                android:backgroundTint="#10B981" />
+
+            <ImageView
+                android:id="@+id/iv_subject_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_schedule"
+                app:tint="#10B981" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_subject_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Nama Pelajaran"
+                android:textColor="@color/text_dark"
+                android:textSize="15sp"
+                android:letterSpacing="-0.01" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:alpha="0.6"
+                    android:src="@drawable/ic_info"
+                    app:tint="@color/text_gray" />
+
+                <TextView
+                    android:id="@+id/tv_day_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Hari | 00:00 WIB"
+                    android:textColor="@color/text_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:alpha="0.4"
+            android:src="@drawable/ic_chevron_right"
+            app:tint="@color/text_gray" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

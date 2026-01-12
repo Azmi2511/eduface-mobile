@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Eduface" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/edu_blue_primary</item>
+        <item name="colorPrimaryVariant">@color/edu_blue_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:statusBarColor">@color/edu_blue_primary</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+    <style name="BottomNavText" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/popup_fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="CustomAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.LargeComponent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ShapeAppearance.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyleWrapper</item>
+    </style>
+
+    <style name="BottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+</resources>

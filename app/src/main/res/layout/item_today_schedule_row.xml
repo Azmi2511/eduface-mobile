@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:id="@+id/tv_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Matematika"
+        android:textColor="#2563EB"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:text="07:00-10:20"
+        android:textColor="@color/text_gray"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/bg_pill_primary"
+        android:backgroundTint="#EFF6FF"
+        android:fontFamily="@font/poppins_medium"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:text="Detail"
+        android:textColor="#3B82F6"
+        android:textSize="11sp" />
+</LinearLayout>

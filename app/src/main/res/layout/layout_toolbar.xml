@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="4dp"
+    app:contentPadding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_app_logo"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_eduface_logo_full"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_notifications"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cv_profile_chip"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/blue_primary"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tv_notification_badge"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:background="@drawable/bg_red_dot_circle"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="9sp"
+            android:fontFamily="@font/poppins_bold"
+            android:visibility="gone"
+            app:layout_constraintCircle="@id/iv_notification"
+            app:layout_constraintEnd_toEndOf="@id/iv_notification"
+            app:layout_constraintTop_toTopOf="@id/iv_notification"
+            android:translationX="6dp"
+            android:translationY="-6dp"
+            tools:text="1"
+            tools:visibility="visible" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_profile_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="4dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zul Azmi"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_bold" />
+
+                    <TextView
+                        android:id="@+id/tv_user_role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Orang Tua"
+                        android:textColor="@color/grey_600"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/poppins_regular" />
+                </LinearLayout>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/siv_profile_picture"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_user_placeholder"
+                    app:shapeAppearanceOverlay="@style/CircleImageWithStroke"
+                    app:strokeColor="@color/edu_blue_primary"
+                    app:strokeWidth="2dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

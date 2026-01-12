@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="id.my.eduface.ui.home.HomeFragment"
+        android:label="Beranda"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="id.my.eduface.ui.schedule.ScheduleFragment"
+        android:label="Jadwal"
+        tools:layout="@layout/fragment_schedule" />
+    <fragment
+        android:id="@+id/navigation_attendance"
+        android:name="id.my.eduface.ui.attendance.AttendanceFragment"
+        android:label="Absensi"
+        tools:layout="@layout/fragment_attendance" />
+
+    <fragment
+        android:id="@+id/navigation_permit"
+        android:name="id.my.eduface.ui.permission.PermissionFragment"
+        android:label="Izin"
+        tools:layout="@layout/fragment_permission" />
+
+    <fragment
+        android:id="@+id/navigation_notif"
+        android:name="id.my.eduface.ui.notif.NotificationFragment"
+        android:label="Notif"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/menu_profile"
+        android:name="id.my.eduface.ui.profile.ProfileFragment"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profile"/>
+
+</navigation>
