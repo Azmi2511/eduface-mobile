@@ -19,6 +19,13 @@ interface ApiService {
     suspend fun getRegisterData(): Response<RegisterDataResponse>
 
     @Multipart
+    @POST("face/register")
+    suspend fun registerFace(
+        @Part("pose") pose: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Response<FaceRegisterResponse>
+
+    @Multipart
     @POST("send-otp")
     suspend fun sendOtp(
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,

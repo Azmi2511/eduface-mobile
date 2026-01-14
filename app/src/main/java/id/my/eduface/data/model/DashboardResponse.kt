@@ -5,7 +5,8 @@ data class DashboardResponse(
     @SerializedName("parent_name") val parentName: String?,
     @SerializedName("children") val children: List<Child>,
     @SerializedName("statistics") val statistics: Statistics,
-    @SerializedName("attendance_logs") val attendanceLogs: List<AttendanceLog>?
+    @SerializedName("attendance_logs") val attendanceLogs: List<AttendanceLog>?,
+    @SerializedName("is_face_registered") val isFaceRegistered: Boolean = false
 )
 
 data class Child(

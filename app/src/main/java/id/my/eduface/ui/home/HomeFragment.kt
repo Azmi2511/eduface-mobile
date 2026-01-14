@@ -1,5 +1,8 @@
 package id.my.eduface.ui.home
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,7 @@ import id.my.eduface.R
 import id.my.eduface.data.model.*
 import id.my.eduface.data.network.ApiClient
 import id.my.eduface.databinding.FragmentHomeBinding
+import id.my.eduface.ui.face.FaceRegisterActivity
 import id.my.eduface.utils.SessionManager
 import id.my.eduface.utils.ToastUtils
 import retrofit2.Call
@@ -41,6 +45,10 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         showInitialLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
         fetchDashboardData()
     }
 
@@ -94,10 +102,13 @@ class HomeFragment : Fragment() {
             binding.spinnerAnak.visibility = View.GONE
             binding.cvStudentSelector.visibility = View.GONE
 
+            setupFaceStatusCard(data.isFaceRegistered)
+
             updateStatisticsUI(data.statistics)
             displayLogs(allAttendanceLogs)
 
         } else if (role == "parent" && data.children.isNotEmpty()) {
+            binding.cvFaceStatus.visibility = View.GONE
             binding.spinnerAnak.visibility = View.VISIBLE
             binding.cvStudentSelector.visibility = View.VISIBLE
 
@@ -117,9 +128,34 @@ class HomeFragment : Fragment() {
                 filterLogsByChild(firstChild)
                 setupSpinnerListener()
             }
-        } else{
+        } else {
             binding.cvStudentSelector.visibility = View.GONE
+            binding.cvFaceStatus.visibility = View.GONE
             updateStatisticsUI(data.statistics)
+        }
+    }
+
+    private fun setupFaceStatusCard(isRegistered: Boolean) {
+        binding.cvFaceStatus.visibility = View.VISIBLE
+
+        if (isRegistered) {
+            binding.cvFaceStatus.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")))
+            binding.ivFaceStatusIcon.setImageResource(android.R.drawable.checkbox_on_background)
+            binding.tvFaceStatusTitle.text = "Wajah Terverifikasi"
+            binding.tvFaceStatusDesc.text = "Data wajah Anda sudah aktif. Anda dapat melakukan absensi."
+            binding.ivFaceArrow.visibility = View.GONE
+            binding.cvFaceStatus.setOnClickListener(null)
+        } else {
+            binding.cvFaceStatus.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#F44336")))
+            binding.ivFaceStatusIcon.setImageResource(android.R.drawable.ic_dialog_alert)
+            binding.tvFaceStatusTitle.text = "Wajah Belum Didaftarkan!"
+            binding.tvFaceStatusDesc.text = "Ketuk kartu ini untuk merekam wajah Anda sekarang."
+            binding.ivFaceArrow.visibility = View.VISIBLE
+
+            binding.cvFaceStatus.setOnClickListener {
+                val intent = Intent(requireContext(), FaceRegisterActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
