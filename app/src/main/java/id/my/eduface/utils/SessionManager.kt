@@ -2,14 +2,18 @@ package id.my.eduface.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import id.my.eduface.data.model.User
 
 class SessionManager(context: Context) {
 
     private val prefs: SharedPreferences = context.getSharedPreferences("eduface_session", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = prefs.edit()
+    private val gson = Gson()
 
     companion object {
         const val KEY_IS_LOGIN = "is_login"
+        const val KEY_USER_DATA = "user_data"
         const val KEY_NAME = "user_name"
         const val KEY_ROLE = "user_role"
         const val KEY_EMAIL = "user_email"
@@ -68,11 +72,24 @@ class SessionManager(context: Context) {
         return prefs.getInt(KEY_SELECTED_CLASS_ID, -1)
     }
 
-    fun saveUser(name: String, role: String, photoUrl: String?) {
-        editor.putString(KEY_NAME, name)
-        editor.putString(KEY_ROLE, role)
-        editor.putString(KEY_PHOTO_URL, photoUrl)
+    fun saveUser(user: User) {
+        val userJson = gson.toJson(user)
+        editor.putString(KEY_USER_DATA, userJson)
+        editor.putBoolean(KEY_IS_LOGIN, true)
         editor.apply()
+    }
+
+    fun getUser(): User? {
+        val json = prefs.getString(KEY_USER_DATA, null)
+        return if (json != null) {
+            try {
+                gson.fromJson(json, User::class.java)
+            } catch (e: Exception) {
+                null
+            }
+        } else {
+            null
+        }
     }
 
     fun createLoginSession(name: String, role: String, email: String, photoUrl: String?, childCount: Int) {

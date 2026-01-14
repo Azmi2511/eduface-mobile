@@ -20,6 +20,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.profile.AboutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.SecurityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.PersonalInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="false" />
         <activity

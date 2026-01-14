@@ -38,8 +38,23 @@ interface ApiService {
     @GET("me")
     suspend fun getMyProfile(): Response<SingleResponse<User>>
 
-    @PATCH("me/update")
-    suspend fun updateProfile(@Body data: Map<String, String>): Response<SingleResponse<User>>
+    @FormUrlEncoded
+    @POST("me/update")
+    suspend fun updateProfile(
+        @Field("full_name") fullName: String,
+        @Field("email") email: String,
+        @Field("phone") phone: String?,
+        @Field("_method") method: String = "PUT"
+    ): Response<SingleResponse<User>>
+
+    @FormUrlEncoded
+    @POST("me/password")
+    suspend fun updatePassword(
+        @Field("current_password") currentPass: String,
+        @Field("password") newPass: String,
+        @Field("password_confirmation") confirmPass: String,
+        @Field("_method") method: String = "PUT"
+    ): Response<SingleResponse<Any>>
 
     @GET("my-schedules/today")
     suspend fun getTodaySchedule(): Response<ListResponse<Schedule>>

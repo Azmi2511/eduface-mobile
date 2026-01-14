@@ -40,6 +40,7 @@
             android:padding="4dp"
             android:src="@drawable/ic_user"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
             app:shapeAppearanceOverlay="@style/CircleImage"
@@ -89,6 +90,7 @@
                 android:padding="20dp">
 
                 <LinearLayout
+                    android:id="@+id/layoutAttendanceRate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -117,6 +119,7 @@
                     android:background="#EEEEEE" />
 
                 <LinearLayout
+                    android:id="@+id/layoutChildCount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
