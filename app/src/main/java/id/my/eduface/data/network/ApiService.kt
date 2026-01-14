@@ -21,14 +21,14 @@ interface ApiService {
     @Multipart
     @POST("send-otp")
     suspend fun sendOtp(
-        @PartMap data: Map<String, RequestBody>,
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part photo: MultipartBody.Part?
     ): Response<OtpResponse>
 
     @Multipart
     @POST("verify-register")
     suspend fun verifyAndRegister(
-        @PartMap data: Map<String, RequestBody>,
+        @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part photo: MultipartBody.Part?
     ): Response<RegisterResponse>
 

@@ -1,14 +1,9 @@
 package id.my.eduface.ui.register
 
-import android.content.Context
+import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import id.my.eduface.data.model.OtpResponse
-import id.my.eduface.data.model.RegisterDataContent
-import id.my.eduface.data.model.RegisterResponse
+import androidx.lifecycle.*
+import id.my.eduface.data.model.*
 import id.my.eduface.data.repository.AuthRepository
 import id.my.eduface.utils.Resource
 import kotlinx.coroutines.launch
@@ -20,7 +15,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 
-class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
+class RegisterViewModel(application: Application, private val repository: AuthRepository) : AndroidViewModel(application) {
+
+    private val context = application.applicationContext
 
     private val _registerData = MutableLiveData<Resource<RegisterDataContent>>()
     val registerData: LiveData<Resource<RegisterDataContent>> = _registerData
@@ -38,9 +35,13 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
         _registerData.value = Resource.Loading()
         viewModelScope.launch {
             val response = repository.getRegisterData()
-            // Mapping response agar sesuai Resource wrapper Anda
             if (response is Resource.Success) {
-                _registerData.value = Resource.Success(response.data!!.data)
+                val content = response.data?.data
+                if (content != null) {
+                    _registerData.value = Resource.Success(content)
+                } else {
+                    _registerData.value = Resource.Error("Data kosong")
+                }
             } else if (response is Resource.Error) {
                 _registerData.value = Resource.Error(response.message ?: "Gagal memuat data")
             }
@@ -48,94 +49,72 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     }
 
     fun processRegister(
-        context: Context,
         name: String, email: String, password: String, confirm: String,
         role: String, gender: String, phone: String, idNumber: String,
         classId: Int?, parentId: Int?, photoUri: Uri?
     ) {
         if (password != confirm) {
-            _otpResult.value = Resource.Error("Konfirmasi password tidak sesuai")
+            _otpResult.value = Resource.Error("Password tidak cocok")
             return
         }
 
         _otpResult.value = Resource.Loading()
-
         viewModelScope.launch {
             try {
                 val params = HashMap<String, RequestBody>()
-                params["name"] = createPart(name)
-                params["email"] = createPart(email)
-                params["password"] = createPart(password)
-                params["password_confirmation"] = createPart(confirm)
-                params["role"] = createPart(role)
-                params["gender"] = createPart(gender)
-                params["phone"] = createPart(phone)
+                params["name"] = name.toPart()
+                params["email"] = email.toPart()
+                params["password"] = password.toPart()
+                params["password_confirmation"] = confirm.toPart()
+                params["role"] = role.toPart()
+                params["gender"] = gender.toPart()
+                params["phone"] = phone.toPart()
 
                 if (role == "student") {
-                    params["id_number"] = createPart(idNumber)
-                    classId?.let { params["class_id"] = createPart(it.toString()) }
-                    parentId?.let { params["parent_id"] = createPart(it.toString()) }
+                    params["id_number"] = idNumber.toPart()
+                    classId?.let { params["class_id"] = it.toString().toPart() }
+                    parentId?.let { params["parent_id"] = it.toString().toPart() }
                 } else if (role == "teacher") {
-                    params["id_number"] = createPart(idNumber)
+                    params["id_number"] = idNumber.toPart()
                 }
 
                 tempParams = params
                 tempPhotoUri = photoUri
 
-                val photoPart = prepareFilePart(context, photoUri)
-
-                val response = repository.sendOtp(params, photoPart)
-                _otpResult.value = response
-
+                val photoPart = prepareFilePart(photoUri)
+                _otpResult.value = repository.sendOtp(params, photoPart)
             } catch (e: Exception) {
-                _otpResult.value = Resource.Error(e.message ?: "Terjadi kesalahan")
+                _otpResult.value = Resource.Error(e.message ?: "Error")
             }
         }
     }
 
-    fun verifyOtpAndRegister(context: Context, otpCode: String) {
-        if (tempParams == null) {
-            _finalRegisterResult.value = Resource.Error("Data registrasi hilang, silakan ulangi.")
-            return
-        }
-
+    fun verifyOtpAndRegister(otpCode: String) {
+        val params = tempParams ?: return
         _finalRegisterResult.value = Resource.Loading()
-
         viewModelScope.launch {
             try {
-                tempParams!!["otp_code"] = createPart(otpCode)
-
-                val photoPart = prepareFilePart(context, tempPhotoUri)
-
-                val response = repository.verifyAndRegister(tempParams!!, photoPart)
-                _finalRegisterResult.value = response
-
+                params["otp_code"] = otpCode.toPart()
+                val photoPart = prepareFilePart(tempPhotoUri)
+                _finalRegisterResult.value = repository.verifyAndRegister(params, photoPart)
             } catch (e: Exception) {
-                _finalRegisterResult.value = Resource.Error(e.message ?: "Gagal Verifikasi")
+                _finalRegisterResult.value = Resource.Error(e.message ?: "Gagal")
             }
         }
     }
 
-    // --- Helpers ---
-
-    private fun createPart(value: String): RequestBody {
-        return value.toRequestBody("text/plain".toMediaTypeOrNull())
+    fun resetOtpResult() {
+        _otpResult.value = null
     }
 
-    private fun prepareFilePart(context: Context, uri: Uri?): MultipartBody.Part? {
+    private fun String.toPart() = this.toRequestBody("text/plain".toMediaTypeOrNull())
+
+    private fun prepareFilePart(uri: Uri?): MultipartBody.Part? {
         if (uri == null) return null
-        val file = uriToFile(context, uri)
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData("photo", file.name, requestFile)
-    }
-
-    private fun uriToFile(context: Context, uri: Uri): File {
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val file = File(context.cacheDir, "temp_${System.currentTimeMillis()}.jpg")
-        val outputStream = FileOutputStream(file)
-        inputStream?.copyTo(outputStream)
-        inputStream?.close()
-        outputStream.close()
-        return file
+        val file = File(context.cacheDir, "upload_${System.currentTimeMillis()}.jpg")
+        context.contentResolver.openInputStream(uri)?.use { input ->
+            FileOutputStream(file).use { output -> input.copyTo(output) }
+        }
+        return MultipartBody.Part.createFormData("photo", file.name, file.asRequestBody("image/*".toMediaTypeOrNull()))
     }
 }

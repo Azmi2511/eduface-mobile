@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupViewModel() {
         val apiService = ApiClient.getApiService(this)
         val repository = AuthRepository(apiService)
-        val factory = ViewModelFactory(repository)
+        val factory = ViewModelFactory(application, repository)
         viewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
     }
 
