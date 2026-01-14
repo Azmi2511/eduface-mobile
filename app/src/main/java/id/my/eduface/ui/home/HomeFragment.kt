@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
 
         setupRecyclerView()
         showInitialLoading()
-        fetchDashboardData()
     }
 
     override fun onResume() {
